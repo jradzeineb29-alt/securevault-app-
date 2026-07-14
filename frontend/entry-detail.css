@@ -1,0 +1,75 @@
+/* entry-detail.css */
+.detail-outer{max-width:640px;margin:0 auto;padding:48px 24px;position:relative;z-index:1;}
+
+.detail-card{
+  padding:44px;
+  animation:floatCardSlow 7s ease-in-out infinite;
+}
+
+/* ── Category badge ── */
+.cat-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:5px 14px;border-radius:20px;font-size:11px;
+  font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:24px;
+}
+.cat-badge .badge-img{width:20px;height:20px;border-radius:4px;flex-shrink:0;}
+.badge-social {background:rgba(0,180,216,.12); border:1px solid var(--blue);  color:var(--blue);}
+.badge-bank   {background:rgba(0,245,160,.12); border:1px solid var(--green); color:var(--green);}
+.badge-work   {background:rgba(230,57,70,.12); border:1px solid var(--red);   color:var(--red);}
+.badge-personal{background:rgba(168,85,247,.12);border:1px solid var(--purple);color:var(--purple);}
+
+/* ── Entry title with icon ── */
+.detail-title-row{display:flex;align-items:center;gap:16px;margin-bottom:32px;}
+.detail-entry-icon{width:56px;height:56px;border-radius:14px;flex-shrink:0;}
+.detail-title{
+  font-family:var(--font-h);font-size:28px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+}
+
+/* ── Info rows ── */
+.info-row{
+  display:flex;flex-direction:column;gap:5px;
+  padding:16px 0;border-bottom:1px solid var(--border);
+}
+.info-row:last-of-type{border-bottom:none;}
+.info-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.info-value{font-size:15px;color:var(--text);word-break:break-all;}
+
+/* ── Secret value row ── */
+.secret-row{display:flex;align-items:center;gap:10px;margin-top:6px;}
+.secret-dots{font-size:22px;letter-spacing:4px;color:var(--muted);flex:1;}
+.secret-actual{
+  font-family:monospace;font-size:14px;color:var(--green);
+  flex:1;word-break:break-all;display:none;
+}
+.copy-feedback{font-size:11px;color:var(--green);height:16px;margin-top:4px;}
+
+/* ── Small action buttons ── */
+.btn-sm{
+  padding:7px 14px;font-size:12px;border-radius:6px;
+  font-family:var(--font-h);font-weight:600;letter-spacing:1px;
+  cursor:pointer;border:none;transition:all .2s;white-space:nowrap;
+  display:flex;align-items:center;gap:6px;
+}
+.btn-sm .btn-sm-icon{width:16px;height:16px;border-radius:3px;flex-shrink:0;}
+.btn-sm-blue {background:rgba(0,180,216,.15);color:var(--blue); border:1px solid var(--blue);}
+.btn-sm-green{background:rgba(0,245,160,.15);color:var(--green);border:1px solid var(--green);}
+.btn-sm-blue:hover {background:var(--blue); color:var(--bg);}
+.btn-sm-green:hover{background:var(--green);color:var(--bg);}
+
+/* ── Bottom action buttons ── */
+.action-buttons{display:flex;gap:12px;margin-top:32px;}
+.action-buttons .btn{
+  display:flex;align-items:center;gap:8px;
+}
+.btn-action-icon{width:18px;height:18px;border-radius:4px;flex-shrink:0;}
+
+/* ── Modal ── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.75);
+  backdrop-filter:blur(5px);display:none;
+  align-items:center;justify-content:center;z-index:2000;
+}
+.modal-overlay.open{display:flex;}
+.modal{width:100%;max-width:400px;padding:40px;text-align:center;}

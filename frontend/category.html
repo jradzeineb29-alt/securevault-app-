@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SecureVault — Category</title>
+  <link rel="stylesheet" href="common.css"/>
+  <link rel="stylesheet" href="entries.css"/>
+  <link rel="stylesheet" href="category.css"/>
+</head>
+<body>
+<nav class="navbar">
+  <a class="navbar-brand" href="home.html">
+    <div class="nav-logo-wrap"><div class="img-placeholder" style="width:32px;height:32px;border-radius:8px;"><img src="ChatGPT Image 14 juil. 2026, 09_33_25.png" alt="logo"/></div></div>
+    Secure<span>Vault</span>
+  </a>
+  <button class="btn btn-danger" style="padding:8px 18px;font-size:13px;" onclick="logout()">Sign Out</button>
+</nav>
+
+<div class="page-wrapper">
+<div class="entries-wrap">
+
+  <a href="entries.html" class="back-link">&#8592; Back to Categories</a>
+
+  <div class="cat-page-header">
+    <div class="img-placeholder cat-hero-img" id="catHeroImg">
+      <img src="category.jpg" alt="category" style="width:100%;height:100%;object-fit:cover;border-radius:16px;"/>
+    </div>
+    <div>
+      <h1 class="section-title" id="pageTitle">Category</h1>
+      <p style="color:var(--muted);font-size:14px;" id="pageDesc"></p>
+    </div>
+  </div>
+
+  <!-- Sub-category list (social / bank / work) -->
+  <div id="subcatView">
+    <div class="subcat-list" id="subcatList"></div>
+  </div>
+
+  <!-- Entry list (personal or after sub selected) -->
+  <div id="entryView" style="display:none;">
+    <div id="entryListWrap"></div>
+  </div>
+
+</div>
+</div>
+
+<script src="category.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SecureVault — Entries</title>
+  <link rel="stylesheet" href="common.css"/>
+  <link rel="stylesheet" href="entries.css"/>
+</head>
+<body>
+<nav class="navbar">
+  <a class="navbar-brand" href="home.html">
+    <div class="nav-logo-wrap"><div class="img-placeholder" style="width:32px;height:32px;border-radius:8px;"><img src="ChatGPT Image 14 juil. 2026, 09_33_25.png" alt="SecureVault logo" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/></div></div>
+    Secure<span>Vault</span>
+  </a>
+  <button class="btn btn-danger" style="padding:8px 18px;font-size:13px;" onclick="logout()">Sign Out</button>
+</nav>
+
+<div class="page-wrapper">
+<div class="entries-wrap">
+
+  <a href="home.html" class="back-link">&#8592; Back to Home</a>
+  <h1 class="section-title">Your <span>Vault</span></h1>
+  <p style="color:var(--muted);margin-bottom:44px;font-size:14px;">Select a category to browse your entries.</p>
+
+  <div class="cat-grid">
+
+    <a href="category.html?cat=social" class="cat-tile card animate-in" style="animation-delay:.05s;">
+      <div class="ct-glow" style="background:var(--blue)"></div>
+      <div class="ct-img-wrap">
+        <div class="img-placeholder ct-img">
+          <img src="social media.jpg" alt="Social Media"/>
+        </div>
+      </div>
+      <div class="ct-name">Social Media</div>
+      <div class="ct-count" id="count-social">— entries</div>
+      <div class="ct-arrow">&#8594;</div>
+    </a>
+
+    <a href="category.html?cat=bank" class="cat-tile card animate-in" style="animation-delay:.1s;">
+      <div class="ct-glow" style="background:var(--green)"></div>
+      <div class="ct-img-wrap">
+        <div class="img-placeholder ct-img">
+          <!-- Drop a banking image here e.g. src="images/bank.jpg" -->
+          <img src="bank.webp" alt="Banking"/>
+        </div>
+      </div>
+      <div class="ct-name">Banking</div>
+      <div class="ct-count" id="count-bank">— entries</div>
+      <div class="ct-arrow">&#8594;</div>
+    </a>
+
+    <a href="category.html?cat=work" class="cat-tile card animate-in" style="animation-delay:.15s;">
+      <div class="ct-glow" style="background:var(--red)"></div>
+      <div class="ct-img-wrap">
+        <div class="img-placeholder ct-img">
+          <img src="work.webp" alt="Work"/>
+        </div>
+      </div>
+      <div class="ct-name">Work</div>
+      <div class="ct-count" id="count-work">— entries</div>
+      <div class="ct-arrow">&#8594;</div>
+    </a>
+
+    <a href="category.html?cat=personal" class="cat-tile card animate-in" style="animation-delay:.2s;">
+      <div class="ct-glow" style="background:var(--purple)"></div>
+      <div class="ct-img-wrap">
+        <div class="img-placeholder ct-img">
+          <!-- Drop a personal/home image here e.g. src="images/personal.jpg" -->
+          <img src="personal.png" alt="Personal"/>
+        </div>
+      </div>
+      <div class="ct-name">Personal</div>
+      <div class="ct-count" id="count-personal">— entries</div>
+      <div class="ct-arrow">&#8594;</div>
+    </a>
+
+  </div>
+</div>
+</div>
+
+<script src="entries.js"></script>
+</body>
+</html>

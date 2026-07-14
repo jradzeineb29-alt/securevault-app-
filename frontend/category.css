@@ -1,0 +1,44 @@
+/* category.css */
+
+.cat-page-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 36px;
+}
+
+.cat-hero-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  flex-shrink: 0;
+}
+
+/* ── Shining glow effect when hovering subcat/entry items ── */
+.subcat-item,
+.entry-item {
+  position: relative;
+  overflow: hidden;
+}
+
+/* scan line that sweeps across on hover */
+.subcat-item::after,
+.entry-item::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 180, 216, 0.08),
+    transparent
+  );
+  transition: left 0.4s ease;
+  pointer-events: none;
+}
+.subcat-item:hover::after,
+.entry-item:hover::after {
+  left: 150%;
+}

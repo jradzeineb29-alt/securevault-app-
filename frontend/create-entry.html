@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SecureVault — Create Entry</title>
+  <link rel="stylesheet" href="common.css"/>
+  <link rel="stylesheet" href="create-entry.css"/>
+</head>
+<body>
+<div id="particles"></div>
+
+<nav class="navbar">
+  <a class="navbar-brand" href="home.html">
+    <div class="nav-logo-wrap"><div class="img-placeholder" style="width:32px;height:32px;border-radius:8px;"><img src="ChatGPT Image 14 juil. 2026, 09_33_25.png" alt="SecureVault logo" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/></div></div>
+    Secure<span>Vault</span>
+  </a>
+  <button class="btn btn-danger" style="padding:8px 18px;font-size:13px;" onclick="logout()">Sign Out</button>
+</nav>
+
+<div class="page-wrapper">
+<div class="entry-outer">
+
+  <a href="home.html" class="back-link">&#8592; Back to Home</a>
+
+  <!-- Floating form card -->
+  <div class="entry-float-wrap">
+
+    <!-- Left side: form -->
+    <div class="entry-card card animate-in">
+      <div class="entry-card-scan"></div>
+
+      <div class="entry-header">
+        <!-- IMAGE: create entry header icon -->
+        <div class="img-placeholder" style="width:52px;height:52px;border-radius:12px;flex-shrink:0;">
+          <img src="" alt="create entry"/>
+        </div>
+        <div>
+          <h1 class="section-title" id="formTitle">New <span>Entry</span></h1>
+          <p style="color:var(--muted);font-size:13px;">All values encrypted with AES-256 before saving.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-error"   id="errorBox"></div>
+      <div class="alert alert-success" id="successBox"></div>
+
+      <form id="entryForm">
+
+        <div class="field">
+          <label>Title</label>
+          <input type="text" id="title" placeholder="e.g. My Instagram Account" required/>
+        </div>
+
+        <div class="field">
+          <label>Username / Login</label>
+          <input type="text" id="entryUsername" placeholder="e.g. jrad29 or you@email.com"/>
+        </div>
+
+        <div class="field">
+          <label>Password / Secret Value</label>
+          <div class="pw-wrap">
+            <input type="password" id="entryValue" placeholder="The secret to encrypt" required/>
+            <button type="button" class="pw-toggle" id="togglePw" title="Show/hide">
+              <!-- IMAGE: eye icon — replace with src="images/eye.png" -->
+              <div class="img-placeholder" style="width:20px;height:20px;border-radius:4px;background:none;border:none;">
+                <img src="" alt="show"/>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Category</label>
+          <select id="category" onchange="handleCategory()">
+            <option value="">— Select category —</option>
+            <option value="social">Social Media</option>
+            <option value="bank">Banking</option>
+            <option value="work">Work</option>
+            <option value="personal">Personal</option>
+          </select>
+        </div>
+
+        <div class="field" id="subField" style="display:none;">
+          <label id="subLabel">Sub-category</label>
+          <!-- Custom icon select — JS renders this -->
+          <div id="iconSelectWrap"></div>
+          <select id="subcategory" style="display:none;"></select>
+        </div>
+
+        <div class="field">
+          <label>Notes (optional)</label>
+          <textarea id="notes" placeholder="Any extra info..."></textarea>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:8px;">
+          <button type="submit" class="btn btn-green" style="flex:1;justify-content:center;" id="saveBtn">
+            Encrypt &amp; Save
+          </button>
+          <a href="home.html" class="btn btn-ghost" style="justify-content:center;padding:12px 20px;">
+            Cancel
+          </a>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- Right side: floating info panel -->
+    <div class="entry-info-panel">
+      <div class="eip-card card float-1">
+        <div class="img-placeholder" style="width:44px;height:44px;border-radius:10px;">
+          <!-- IMAGE: AES lock icon -->
+          <img src="" alt="AES-256"/>
+        </div>
+        <div class="eip-title">AES-256</div>
+        <div class="eip-sub">Your value is encrypted before it's saved. The plain text never touches the database.</div>
+      </div>
+      <div class="eip-card card float-2">
+        <div class="img-placeholder" style="width:44px;height:44px;border-radius:10px;">
+          <!-- IMAGE: JWT icon -->
+          <img src="" alt="JWT"/>
+        </div>
+        <div class="eip-title">JWT Protected</div>
+        <div class="eip-sub">Only you can access your entries. Every request requires your login token.</div>
+      </div>
+      <div class="eip-card card float-3">
+        <div class="img-placeholder" style="width:44px;height:44px;border-radius:10px;">
+          <!-- IMAGE: self-hosted icon -->
+          <img src="" alt="Self-Hosted"/>
+        </div>
+        <div class="eip-title">Self-Hosted</div>
+        <div class="eip-sub">Your data never leaves your server. No cloud. No third parties.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script src="particles.js"></script>
+<script src="create-entry.js"></script>
+</body>
+</html>

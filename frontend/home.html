@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SecureVault — Home</title>
+  <link rel="stylesheet" href="common.css"/>
+  <link rel="stylesheet" href="home.css"/>
+</head>
+<body>
+<div id="particles"></div>
+
+<nav class="navbar">
+  <a class="navbar-brand" href="home.html">
+    <div class="nav-logo-wrap">
+      <div class="img-placeholder" style="width:32px;height:32px;border-radius:8px;">
+        <img src="ChatGPT Image 14 juil. 2026, 09_33_25.png" alt="SecureVault logo" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/>
+      </div>
+    </div>
+    Secure<span>Vault</span>
+  </a>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <span class="nav-user" id="navUser"></span>
+    <button class="btn btn-danger" style="padding:8px 18px;font-size:13px;" onclick="logout()">Sign Out</button>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+<div class="home-wrap">
+
+  <!-- Welcome banner -->
+  <div class="welcome-banner card animate-in">
+    <div class="wb-scan"></div>
+    <div class="wb-left">
+      <div class="wb-greeting">Welcome back,</div>
+      <div class="wb-name" id="welcomeName">Vault Owner</div>
+      <div class="wb-sub">Your vault is active. All secrets encrypted with AES-256.</div>
+    </div>
+    <div class="wb-right">
+      <!-- IMAGE: replace with vault/shield hero image -->
+      <div class="img-placeholder wb-hero-img"></div>
+    </div>
+  </div>
+
+  <!-- KPI row -->
+  <div class="kpi-row">
+    <div class="kpi-mini card float-1">
+      <div class="km-icon">
+        <!-- IMAGE: lock icon -->
+        <div class="img-placeholder" style="width:36px;height:36px;border-radius:8px;">
+          <img src="secret.jpg" alt="Lock icon" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/>
+        </div>
+      </div>
+      <div>
+        <div class="km-val" id="totalCount">0</div>
+        <div class="km-label">Secrets Stored</div>
+      </div>
+    </div>
+    <div class="kpi-mini card float-2">
+      <div class="km-icon">
+        <!-- IMAGE: shield icon -->
+        <div class="img-placeholder" style="width:36px;height:36px;border-radius:8px;">
+          <img src="aes.jpg" alt="Shield icon" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/>
+        </div>
+      </div>
+      <div>
+        <div class="km-val" style="color:var(--blue)">AES-256</div>
+        <div class="km-label">Encryption</div>
+      </div>
+    </div>
+    <div class="kpi-mini card float-3">
+      <div class="km-icon">
+        <!-- IMAGE: JWT / token icon -->
+        <div class="img-placeholder" style="width:36px;height:36px;border-radius:8px;">
+          <img src="jwt.png" alt="JWT icon" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/>
+        </div>
+      </div>
+      <div>
+        <div class="km-val" style="color:var(--red)">JWT</div>
+        <div class="km-label">Protected</div>
+      </div>
+    </div>
+    <div class="kpi-mini card float-4">
+      <div class="km-icon">
+        <!-- IMAGE: server icon -->
+        <div class="img-placeholder" style="width:36px;height:36px;border-radius:8px;">
+          <img src="selfhosted.webp" alt="Server icon" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/>
+        </div>
+      </div>
+      <div>
+        <div class="km-val" style="color:var(--purple)">Self</div>
+        <div class="km-label">Hosted</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action cards -->
+  <div class="action-grid">
+    <a href="create-entry.html" class="action-card card animate-in" style="animation-delay:.1s;">
+      <div class="ac-glow red"></div>
+      <div class="ac-img-wrap">
+        <!-- IMAGE: add/create icon or illustration -->
+        <div class="img-placeholder" style="width:64px;height:64px;border-radius:14px;">
+          <img src="createentry.webp" alt="Add icon" style="width:100%;height:100%;object-fit:cover;border-radius:14px;"/>
+        </div>
+      </div>
+      <h2 class="ac-title">Create Entry</h2>
+      <p class="ac-desc">Add a new password, API key, bank credential or personal note to your encrypted vault.</p>
+      <div class="ac-arrow">&#8594;</div>
+    </a>
+    <a href="entries.html" class="action-card card animate-in" style="animation-delay:.2s;">
+      <div class="ac-glow blue"></div>
+      <div class="ac-img-wrap">
+        <!-- IMAGE: vault/list icon or illustration -->
+        <div class="img-placeholder" style="width:64px;height:64px;border-radius:14px;">
+          <img src="showentry.jpg" alt="Vault icon" style="width:100%;height:100%;object-fit:cover;border-radius:14px;"/>
+        </div>
+      </div>
+      <h2 class="ac-title">Show Entries</h2>
+      <p class="ac-desc">Browse your vault by category. Reveal, copy, update or delete any entry instantly.</p>
+      <div class="ac-arrow">&#8594;</div>
+    </a>
+  </div>
+
+</div>
+</div>
+
+<script src="particles.js"></script>
+<script src="home.js"></script>
+</body>
+</html>

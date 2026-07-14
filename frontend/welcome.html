@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SecureVault</title>
+  <link rel="stylesheet" href="common.css"/>
+  <link rel="stylesheet" href="welcome.css"/>
+</head>
+<body>
+<div id="particles"></div>
+
+<nav class="navbar">
+  <a class="navbar-brand" href="welcome.html">
+    <!-- LOGO: replace src with your image e.g. src="images/logo.png" -->
+    <div class="nav-logo-wrap">
+      <div class="img-placeholder" style="width:32px;height:32px;">
+        <img src="ChatGPT Image 14 juil. 2026, 09_33_25.png" alt="logo"/>
+      </div>
+    </div>
+    Secure<span>Vault</span>
+  </a>
+  <div style="display:flex;gap:12px;">
+    <a href="login.html"      class="btn btn-ghost" style="padding:8px 20px;font-size:13px;">Login</a>
+    <a href="onboarding.html" class="btn btn-green" style="padding:8px 20px;font-size:13px;">Get Started</a>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-badge">Military-Grade Encryption</div>
+      <h1 class="hero-title">Your Secrets.<br/><span class="grad">Unbreakable.</span></h1>
+      <p class="hero-sub">
+        In 2024, over <strong>8 billion</strong> credentials were leaked online.
+        Storing passwords, API keys, and sensitive data in plain text is no longer
+        an option. SecureVault encrypts everything with AES-256 — the same standard
+        used by governments and banks.
+      </p>
+      <div class="hero-actions">
+        <a href="onboarding.html" class="btn btn-red">Create Your Vault</a>
+        <a href="login.html"      class="btn btn-ghost">Sign In</a>
+      </div>
+    </div>
+
+    <!-- KPI cards floating on right -->
+    <div class="hero-kpis">
+      <div class="kpi-card float-1">
+        <div class="kpi-icon-wrap">
+          <div class="img-placeholder" style="width:48px;height:48px;border-radius:12px;">
+            <img src="May-14-2025-10_59_50-AM.png" alt="AES-256 encryption"/>
+          </div>
+        </div>
+        <div class="kpi-val" style="color:var(--red)">AES-256</div>
+        <div class="kpi-label">Encryption Standard</div>
+      </div>
+      <div class="kpi-card float-2">
+        <div class="kpi-icon-wrap">
+          <div class="img-placeholder" style="width:48px;height:48px;border-radius:12px;">
+            <!-- Drop a shield icon image here e.g. src="images/shield.png" -->
+            <img src="" alt="8B credentials leaked"/>
+          </div>
+        </div>
+        <div class="kpi-val" style="color:var(--blue)">8B+</div>
+        <div class="kpi-label">Credentials Leaked</div>
+      </div>
+      <div class="kpi-card float-3">
+        <div class="kpi-icon-wrap">
+          <div class="img-placeholder" style="width:48px;height:48px;border-radius:12px;">
+            <!-- Drop a lock icon image here e.g. src="images/lock.png" -->
+            <img src="" alt="zero plain text"/>
+          </div>
+        </div>
+        <div class="kpi-val" style="color:var(--green)">0</div>
+        <div class="kpi-label">Plain Text Stored</div>
+      </div>
+      <div class="kpi-card float-4">
+        <div class="kpi-icon-wrap">
+          <div class="img-placeholder" style="width:48px;height:48px;border-radius:12px;">
+            <!-- Drop a server icon image here e.g. src="images/server.png" -->
+            <img src="" alt="self hosted"/>
+          </div>
+        </div>
+        <div class="kpi-val" style="color:var(--purple)">Self</div>
+        <div class="kpi-label">Hosted &amp; Owned</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS TICKER ── -->
+  <div class="stats-ticker">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--red)"></span> 8 Billion credentials leaked in 2024</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--blue)"></span> AES-256 Military-grade encryption</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--green)"></span> 0 plain text values ever stored</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--purple)"></span> JWT protected — only you can access</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--red)"></span> Self-hosted — your server, your data</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--blue)"></span> bcrypt password hashing</span>
+      <!-- duplicated for seamless loop -->
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--red)"></span> 8 Billion credentials leaked in 2024</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--blue)"></span> AES-256 Military-grade encryption</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--green)"></span> 0 plain text values ever stored</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--purple)"></span> JWT protected — only you can access</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--red)"></span> Self-hosted — your server, your data</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--blue)"></span> bcrypt password hashing</span>
+    </div>
+  </div>
+
+  <!-- ── FEATURES ── -->
+  <section class="features">
+    <div class="features-header">
+      <h2 class="section-title">Why <span>SecureVault</span>?</h2>
+      <p>Enterprise-grade security built for individuals. Everything encrypted, nothing exposed.</p>
+    </div>
+    <div class="feat-grid">
+
+      <div class="feat-card card animate-in" style="animation-delay:.05s">
+        <div class="feat-img-wrap">
+          <!-- IMAGE: replace with encryption illustration -->
+          <div class="img-placeholder" style="width:60px;height:60px;border-radius:12px;"></div>
+        </div>
+        <h3>AES-256 Encryption</h3>
+        <p>Every secret is encrypted before it touches the database. Even if the server is compromised, your data is unreadable without the key.</p>
+        <div class="feat-glow red"></div>
+      </div>
+
+      <div class="feat-card card animate-in" style="animation-delay:.1s">
+        <div class="feat-img-wrap">
+          <!-- IMAGE: replace with categories illustration -->
+          <div class="img-placeholder" style="width:60px;height:60px;border-radius:12px;"></div>
+        </div>
+        <h3>Smart Categories</h3>
+        <p>Organise by Social Media, Banking, Work, or Personal. Find anything in seconds with our intelligent category system.</p>
+        <div class="feat-glow blue"></div>
+      </div>
+
+      <div class="feat-card card animate-in" style="animation-delay:.15s">
+        <div class="feat-img-wrap">
+          <!-- IMAGE: replace with server/self-hosted illustration -->
+          <div class="img-placeholder" style="width:60px;height:60px;border-radius:12px;"></div>
+        </div>
+        <h3>Self-Hosted</h3>
+        <p>Your data never leaves your server. No third-party cloud. No subscriptions. Complete ownership of your vault.</p>
+        <div class="feat-glow green"></div>
+      </div>
+
+      <div class="feat-card card animate-in" style="animation-delay:.2s">
+        <div class="feat-img-wrap">
+          <!-- IMAGE: replace with instant access illustration -->
+          <div class="img-placeholder" style="width:60px;height:60px;border-radius:12px;"></div>
+        </div>
+        <h3>Instant Access</h3>
+        <p>One-click reveal and copy. Get your credentials exactly when you need them, without friction or delays.</p>
+        <div class="feat-glow purple"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="cta-section">
+    <div class="cta-inner card">
+      <div class="cta-scan-line"></div>
+      <h2 class="section-title">Ready to secure <span>your vault?</span></h2>
+      <p style="color:var(--muted);margin:12px 0 36px;font-size:15px;">
+        Setup takes less than 2 minutes.
+      </p>
+      <a href="onboarding.html" class="btn btn-green" style="font-size:17px;padding:16px 44px;">
+        Start Now — It's Free
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<script src="particles.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SecureVault — Register</title>
+  <link rel="stylesheet" href="common.css"/>
+  <link rel="stylesheet" href="auth.css"/>
+</head>
+<body>
+<div id="particles"></div>
+
+<nav class="navbar">
+  <a class="navbar-brand" href="welcome.html">
+    <div class="nav-logo-wrap"><div class="img-placeholder" style="width:32px;height:32px;border-radius:8px;"><img src="ChatGPT Image 14 juil. 2026, 09_33_25.png" alt="SecureVault logo" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/></div></div>
+    Secure<span>Vault</span>
+  </a>
+</nav>
+
+<div class="page-wrapper">
+<div class="auth-container">
+  <div class="auth-card card animate-in">
+
+    <div class="auth-logo-wrap">
+      <!--
+        IMAGE: register page hero icon/illustration
+        Replace src="" with e.g. src="images/vault-register.png"
+      -->
+      <div class="img-placeholder auth-logo-img"><img src="" alt="Create vault"/></div>
+    </div>
+
+    <h1 class="auth-title">Create Your <span style="color:var(--green)">Vault</span></h1>
+    <p class="auth-sub">Secure. Private. Yours.</p>
+
+    <div class="alert alert-error"   id="errorBox"></div>
+    <div class="alert alert-success" id="successBox"></div>
+
+    <form id="registerForm">
+      <div class="field">
+        <label>Username</label>
+        <input type="text" id="username" placeholder="e.g. jrad29" required autocomplete="username"/>
+      </div>
+      <div class="field">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="you@example.com" required autocomplete="email"/>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Min 8 characters" required autocomplete="new-password"/>
+        <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+        <div class="strength-label" id="strengthLabel"></div>
+      </div>
+      <button type="submit" class="btn btn-green" style="width:100%;justify-content:center;margin-top:8px;" id="submitBtn">
+        Create Account
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      Already have an account? <a href="login.html">Sign in</a>
+    </p>
+  </div>
+</div>
+</div>
+
+<script src="particles.js"></script>
+<script src="auth.js"></script>
+</body>
+</html>

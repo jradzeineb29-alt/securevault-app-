@@ -1,0 +1,147 @@
+/* create-entry.css */
+
+.entry-outer {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Two column layout: form + info panel ── */
+.entry-float-wrap {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ── Form card floats ── */
+.entry-card {
+  padding: 40px;
+  animation: floatCardSlow 7s ease-in-out infinite;
+}
+
+.entry-card-scan {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+  animation: scanLine 6s linear infinite;
+  opacity: 0.3;
+}
+
+.entry-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+/* ── Password field ── */
+.pw-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.pw-wrap input { padding-right: 48px; }
+.pw-toggle {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Icon select — custom dropdown with image placeholders ── */
+.icon-select-dropdown {
+  position: relative;
+}
+.icon-select-selected {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: border-color .2s;
+}
+.icon-select-selected:hover { border-color: var(--blue); }
+.icon-select-selected .sel-img {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.icon-select-selected .sel-text { flex: 1; font-size: 14px; color: var(--text); }
+.icon-select-selected .sel-arrow { color: var(--muted); font-size: 12px; }
+
+.icon-select-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0; right: 0;
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  max-height: 260px;
+  overflow-y: auto;
+  z-index: 200;
+  display: none;
+  box-shadow: 0 12px 40px rgba(0,0,0,.5);
+}
+.icon-select-list.open { display: block; }
+
+.icon-select-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background .15s;
+  font-size: 14px;
+}
+.icon-select-opt:hover { background: rgba(0,180,216,.08); }
+.icon-select-opt.selected { background: rgba(0,180,216,.12); color: var(--blue); }
+.icon-select-opt .opt-img {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* ── Right info panel ── */
+.entry-info-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 84px;
+}
+
+.eip-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.eip-title {
+  font-family: var(--font-h);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--green);
+}
+.eip-sub { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+.float-1 { animation: floatCard 5s ease-in-out infinite; }
+.float-2 { animation: floatCard 6s ease-in-out infinite .6s; }
+.float-3 { animation: floatCardSlow 7s ease-in-out infinite 1.2s; }
+
+@media (max-width: 760px) {
+  .entry-float-wrap { grid-template-columns: 1fr; }
+  .entry-info-panel { display: none; }
+}

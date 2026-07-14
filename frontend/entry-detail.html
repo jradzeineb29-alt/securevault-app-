@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SecureVault — Entry</title>
+  <link rel="stylesheet" href="common.css"/>
+  <link rel="stylesheet" href="entry-detail.css"/>
+</head>
+<body>
+<div id="particles"></div>
+
+<nav class="navbar">
+  <a class="navbar-brand" href="home.html">
+    <div class="nav-logo-wrap"><div class="img-placeholder" style="width:32px;height:32px;border-radius:8px;"><img src="ChatGPT Image 14 juil. 2026, 09_33_25.png" alt="SecureVault logo" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/></div></div>
+    Secure<span>Vault</span>
+  </a>
+  <button class="btn btn-danger" style="padding:8px 18px;font-size:13px;" onclick="logout()">Sign Out</button>
+</nav>
+
+<div class="page-wrapper">
+<div class="detail-outer">
+
+  <a id="backLink" href="entries.html" class="back-link">&#8592; Back</a>
+
+  <div class="detail-card card animate-in" id="detailCard">
+    <div style="text-align:center;color:var(--muted);padding:50px;">Loading entry...</div>
+  </div>
+
+</div>
+</div>
+
+<!-- Delete modal -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal card">
+    <div class="modal-icon">
+      <!-- IMAGE: warning/delete icon -->
+      <div class="img-placeholder" style="width:52px;height:52px;border-radius:12px;margin:0 auto 16px;">
+        <img src="" alt="delete warning"/>
+      </div>
+    </div>
+    <h3 style="font-family:var(--font-h);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase;">Delete Entry?</h3>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:28px;">
+      This cannot be undone. The encrypted data will be permanently removed.
+    </p>
+    <div style="display:flex;gap:12px;">
+      <button class="btn btn-danger" style="flex:1;justify-content:center;" id="confirmDelete">Yes, Delete</button>
+      <button class="btn btn-ghost"  style="flex:1;justify-content:center;" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="particles.js"></script>
+<script src="entry-detail.js"></script>
+</body>
+</html>
