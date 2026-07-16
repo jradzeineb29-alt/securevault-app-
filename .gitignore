@@ -1,0 +1,46 @@
+# ==========================
+# Python
+# ==========================
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Environment variables
+.env
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Type checking
+.mypy_cache/
+
+# Logs
+*.log
+
+# SQLite
+*.db
+
+# ==========================
+# VS Code
+# ==========================
+.vscode/
+
+# ==========================
+# Windows
+# ==========================
+Thumbs.db
+
+# macOS
+.DS_Store
+
+# ==========================
+# Docker
+# ==========================
+postgres_data/
