@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SecureVault — Profile</title>
+  <link rel="stylesheet" href="common.css"/>
+  <link rel="stylesheet" href="profile.css"/>
+</head>
+<body>
+<div id="particles"></div>
+
+<nav class="navbar">
+  <a class="navbar-brand" href="welcome.html">
+    <div class="nav-logo-wrap">
+      <img src="ChatGPT Image 14 juil. 2026, 09_33_25.png" alt="logo" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/>
+    </div>
+    Secure<span>Vault</span>
+  </a>
+  <div class="navbar-links" id="navbarLinks">
+    <a href="welcome.html" class="nav-link">Home</a>
+    <a href="home.html"    class="nav-link" id="nlDashboard">Dashboard</a>
+    <a href="profile.html" class="nav-link" id="nlProfile">Profile</a>
+    <span class="nav-user-chip" id="navUserChip" style="display:none;"></span>
+    <a href="login.html"      class="btn btn-ghost"  style="padding:8px 18px;font-size:13px;" id="nlLogin">Login</a>
+    <a href="onboarding.html" class="btn btn-green"  style="padding:8px 18px;font-size:13px;" id="nlRegister">Register</a>
+    <button onclick="globalLogout()" class="btn btn-danger" style="padding:8px 18px;font-size:13px;display:none;" id="nlLogout">Sign Out</button>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+<div class="profile-wrap">
+
+  <!-- Profile header card -->
+  <div class="profile-header card animate-in">
+    <div class="profile-header-scan"></div>
+    <div class="profile-avatar-wrap">
+      <div class="profile-avatar" id="profileAvatar">?</div>
+      <div class="profile-status">
+        <div class="status-dot"></div>
+        Active
+      </div>
+    </div>
+    <div class="profile-info">
+      <div class="profile-username" id="profileUsername">Loading...</div>
+      <div class="profile-email mono" id="profileEmail">—</div>
+      <div class="profile-badges">
+        <span class="badge-pill green">AES-256 Protected</span>
+        <span class="badge-pill blue">JWT Authenticated</span>
+        <span class="badge-pill purple">Self-Hosted</span>
+      </div>
+    </div>
+    <div class="profile-security-score">
+      <div class="score-ring">
+        <svg viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="34" fill="none" stroke="var(--border)" stroke-width="6"/>
+          <circle cx="40" cy="40" r="34" fill="none" stroke="var(--green)" stroke-width="6"
+                  stroke-dasharray="214" stroke-dashoffset="0"
+                  stroke-linecap="round"
+                  transform="rotate(-90 40 40)"
+                  id="scoreCircle"/>
+        </svg>
+        <div class="score-text">
+          <div class="score-num" id="scoreNum">100</div>
+          <div class="score-label">SECURE</div>
+        </div>
+      </div>
+      <div class="score-caption">Security Score</div>
+    </div>
+  </div>
+
+  <!-- Stats grid -->
+  <div class="stats-grid">
+
+    <div class="stat-card card animate-in float-1" style="animation-delay:.05s;">
+      <div class="stat-icon">
+        <img src="secret.jpg" alt="entries" style="width:44px;height:44px;object-fit:cover;border-radius:10px;"/>
+      </div>
+      <div class="stat-val neon-green" id="statTotal">—</div>
+      <div class="stat-label">Total Entries</div>
+      <div class="stat-glow" style="background:var(--green)"></div>
+    </div>
+
+    <div class="stat-card card animate-in float-2" style="animation-delay:.1s;">
+      <div class="stat-icon">
+        <img src="social media.jpg" alt="social" style="width:44px;height:44px;object-fit:cover;border-radius:10px;"/>
+      </div>
+      <div class="stat-val neon-blue" id="statSocial">—</div>
+      <div class="stat-label">Social Media</div>
+      <div class="stat-glow" style="background:var(--blue)"></div>
+    </div>
+
+    <div class="stat-card card animate-in float-3" style="animation-delay:.15s;">
+      <div class="stat-icon">
+        <img src="bank.webp" alt="bank" style="width:44px;height:44px;object-fit:cover;border-radius:10px;"/>
+      </div>
+      <div class="stat-val neon-green" id="statBank">—</div>
+      <div class="stat-label">Banking</div>
+      <div class="stat-glow" style="background:var(--green)"></div>
+    </div>
+
+    <div class="stat-card card animate-in float-4" style="animation-delay:.2s;">
+      <div class="stat-icon">
+        <img src="work.webp" alt="work" style="width:44px;height:44px;object-fit:cover;border-radius:10px;"/>
+      </div>
+      <div class="stat-val neon-red" id="statWork">—</div>
+      <div class="stat-label">Work</div>
+      <div class="stat-glow" style="background:var(--red)"></div>
+    </div>
+
+    <div class="stat-card card animate-in" style="animation-delay:.25s;animation:floatCard 6.5s ease-in-out infinite 1.8s;">
+      <div class="stat-icon">
+        <img src="personal.png" alt="personal" style="width:44px;height:44px;object-fit:cover;border-radius:10px;"/>
+      </div>
+      <div class="stat-val" style="color:var(--purple);" id="statPersonal">—</div>
+      <div class="stat-label">Personal</div>
+      <div class="stat-glow" style="background:var(--purple)"></div>
+    </div>
+
+    <div class="stat-card card animate-in float-1" style="animation-delay:.3s;">
+      <div class="stat-icon">
+        <img src="aes.jpg" alt="encrypted" style="width:44px;height:44px;object-fit:cover;border-radius:10px;"/>
+      </div>
+      <div class="stat-val neon-green">100%</div>
+      <div class="stat-label">Encrypted</div>
+      <div class="stat-glow" style="background:var(--green)"></div>
+    </div>
+
+  </div>
+
+  <!-- Security features list -->
+  <div class="security-list card animate-in">
+    <h2 class="section-title" style="margin-bottom:28px;">Your <span>Security</span> Features</h2>
+    <div class="sec-feature-grid">
+
+      <div class="sec-feature">
+        <div class="sec-check active"></div>
+        <div>
+          <div class="sec-feat-name">AES-256 Encryption</div>
+          <div class="sec-feat-desc">All secrets encrypted at rest with military-grade AES-256</div>
+        </div>
+      </div>
+
+      <div class="sec-feature">
+        <div class="sec-check active"></div>
+        <div>
+          <div class="sec-feat-name">bcrypt Password Hashing</div>
+          <div class="sec-feat-desc">Your password is hashed — never stored in plain text</div>
+        </div>
+      </div>
+
+      <div class="sec-feature">
+        <div class="sec-check active"></div>
+        <div>
+          <div class="sec-feat-name">JWT Authentication</div>
+          <div class="sec-feat-desc">Every request verified with a signed token</div>
+        </div>
+      </div>
+
+      <div class="sec-feature">
+        <div class="sec-check active"></div>
+        <div>
+          <div class="sec-feat-name">Self-Hosted</div>
+          <div class="sec-feat-desc">Your data never leaves your server</div>
+        </div>
+      </div>
+
+      <div class="sec-feature">
+        <div class="sec-check active"></div>
+        <div>
+          <div class="sec-feat-name">Per-User Isolation</div>
+          <div class="sec-feat-desc">You can only access your own entries</div>
+        </div>
+      </div>
+
+      <div class="sec-feature">
+        <div class="sec-check active"></div>
+        <div>
+          <div class="sec-feat-name">Zero Plain Text</div>
+          <div class="sec-feat-desc">Secret values are never stored unencrypted</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Quick actions -->
+  <div class="quick-actions">
+    <a href="create-entry.html" class="qa-card card animate-in">
+      <div class="qa-glow" style="background:var(--green)"></div>
+      <div class="qa-icon"><img src="createentry.webp" alt="create" style="width:52px;height:52px;object-fit:cover;border-radius:12px;"/></div>
+      <div class="qa-title">Add Entry</div>
+      <div class="qa-arrow">&#8594;</div>
+    </a>
+    <a href="entries.html" class="qa-card card animate-in">
+      <div class="qa-glow" style="background:var(--blue)"></div>
+      <div class="qa-icon"><img src="showentry.jpg" alt="entries" style="width:52px;height:52px;object-fit:cover;border-radius:12px;"/></div>
+      <div class="qa-title">View Vault</div>
+      <div class="qa-arrow">&#8594;</div>
+    </a>
+    <a href="home.html" class="qa-card card animate-in">
+      <div class="qa-glow" style="background:var(--purple)"></div>
+      <div class="qa-icon"><img src="secret.jpg" alt="dashboard" style="width:52px;height:52px;object-fit:cover;border-radius:12px;"/></div>
+      <div class="qa-title">Dashboard</div>
+      <div class="qa-arrow">&#8594;</div>
+    </a>
+  </div>
+
+</div>
+</div>
+
+<script src="navbar.js"></script>
+<script src="particles.js"></script>
+<script src="profile.js"></script>
+</body>
+</html>

@@ -1,106 +1,96 @@
 /**
- * entry-detail.js — shows full entry info with image placeholders.
- * No auth guard in demo mode.
+ * entry-detail.js
+ * GET    /entries/{id}  — load and display entry
+ * DELETE /entries/{id}  — delete entry
+ * Edit redirects to create-entry.html?edit={id}
  */
 
-const API   = 'http://localhost:8000';
+const API   = 'http://127.0.0.1:8000';
 const token = localStorage.getItem('token');
-// DEMO MODE: uncomment to enforce login:
-// if (!token) window.location.href = 'login.html';
+if (token === null) window.location.href = 'login.html';
 
 const params   = new URLSearchParams(window.location.search);
-const secretId = params.get('id');
+const entryId  = params.get('id');
+if (!entryId) window.location.href = 'entries.html';
 
-let secretMeta  = {};
-let secretValue = null;
-
-function escapeHtml(s){
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+function escapeHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 const BADGE = {
-  social:  {cls:'badge-social',  label:'Social Media'},
-  bank:    {cls:'badge-bank',    label:'Banking'},
-  work:    {cls:'badge-work',    label:'Work'},
-  personal:{cls:'badge-personal',label:'Personal'}
+  social:   { cls:'badge-social',   label:'Social Media' },
+  bank:     { cls:'badge-bank',     label:'Banking' },
+  work:     { cls:'badge-work',     label:'Work' },
+  personal: { cls:'badge-personal', label:'Personal' }
 };
 
+// ── Load entry from API ────────────────────────────────────────────────────
 async function loadEntry() {
-  if (!token || !secretId) { renderError('No entry selected.'); return; }
+  if (!token) { renderError('Not logged in.'); return; }
   try {
-    const res = await fetch(`${API}/secrets`, {
+    const res = await fetch(`${API}/entries/${entryId}`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
-    if (!res.ok) { renderError('Failed to load entries.'); return; }
-    const all   = await res.json();
-    const entry = all.find(e => String(e.id) === String(secretId));
-    if (!entry) { renderError('Entry not found.'); return; }
-    try { secretMeta = JSON.parse(entry.name); } catch { secretMeta = { title: entry.name }; }
-    renderDetail();
+    if (res.status === 404) { renderError('Entry not found.'); return; }
+    if (res.status === 403) { renderError('Access denied.'); return; }
+    if (!res.ok)             { renderError('Failed to load entry.'); return; }
+
+    const entry = await res.json();
+    renderDetail(entry);
   } catch { renderError('Cannot reach the server.'); }
 }
 
-function renderDetail() {
-  const cat = secretMeta.category || 'personal';
-  const b   = BADGE[cat] || BADGE.personal;
+// ── Extract subcategory from notes: "[SubName] rest" ──────────────────────
+function parseNotes(notes) {
+  const match = (notes || '').match(/^\[([^\]]+)\]\s*([\s\S]*)/);
+  return {
+    subcategory: match ? match[1] : '',
+    cleanNotes:  match ? match[2] : (notes || '')
+  };
+}
 
+// ── Render entry detail ────────────────────────────────────────────────────
+function renderDetail(entry) {
+  const cat  = (entry.category || 'personal').toLowerCase();
+  const b    = BADGE[cat] || BADGE.personal;
+  const { subcategory, cleanNotes } = parseNotes(entry.notes);
+
+  // Set back link
   const backLink = document.getElementById('backLink');
-  backLink.href = secretMeta.subcategory
-    ? `category.html?cat=${cat}&sub=${encodeURIComponent(secretMeta.subcategory)}`
-    : `category.html?cat=${cat}`;
+  if (backLink) {
+    backLink.href = subcategory
+      ? `category.html?cat=${encodeURIComponent(cat)}&sub=${encodeURIComponent(subcategory)}`
+      : `category.html?cat=${encodeURIComponent(cat)}`;
+  }
 
   document.getElementById('detailCard').innerHTML = `
 
-    <!-- Category badge with image placeholder -->
+    <!-- Category badge -->
     <div class="cat-badge ${b.cls}">
-      <!--
-        BADGE IMAGE for ${b.label}
-        Replace src="" with e.g. src="images/${cat}-icon.png"
-      -->
-      <div class="img-placeholder badge-img"><img src="" alt="${b.label}"/></div>
-      ${b.label}${secretMeta.subcategory ? ' &middot; ' + escapeHtml(secretMeta.subcategory) : ''}
+      ${b.label}${subcategory ? ' &middot; ' + escapeHtml(subcategory) : ''}
     </div>
 
-    <!-- Title with icon -->
+    <!-- Title -->
     <div class="detail-title-row">
-      <!--
-        ENTRY ICON IMAGE
-        Replace src="" with e.g. src="images/entry-icon.png"
-      -->
-      <div class="img-placeholder detail-entry-icon"><img src="" alt="entry"/></div>
-      <h1 class="detail-title">${escapeHtml(secretMeta.title || 'Entry')}</h1>
+      <h1 class="detail-title">${escapeHtml(entry.title)}</h1>
     </div>
 
     <!-- Username -->
     <div class="info-row">
       <div class="info-label">Username / Login</div>
       <div class="info-value">
-        ${secretMeta.username
-          ? escapeHtml(secretMeta.username)
+        ${entry.username
+          ? escapeHtml(entry.username)
           : '<span style="color:var(--muted)">—</span>'}
       </div>
     </div>
 
-    <!-- Secret value -->
+    <!-- Password (AES-256 decrypted by backend) -->
     <div class="info-row">
-      <div class="info-label">Entry Value (AES-256 encrypted)</div>
+      <div class="info-label">Password / Secret Value</div>
       <div class="secret-row">
-        <span class="secret-dots" id="secretDots">&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</span>
-        <span class="secret-actual" id="secretActual"></span>
-        <button class="btn-sm btn-sm-blue" id="showBtn" onclick="toggleShow()">
-          <!--
-            SHOW ICON — replace src="" with e.g. src="images/eye.png"
-          -->
-          <div class="img-placeholder btn-sm-icon"><img src="" alt="show"/></div>
-          Show
-        </button>
-        <button class="btn-sm btn-sm-green" onclick="copyValue()">
-          <!--
-            COPY ICON — replace src="" with e.g. src="images/copy.png"
-          -->
-          <div class="img-placeholder btn-sm-icon"><img src="" alt="copy"/></div>
-          Copy
-        </button>
+        <span class="secret-dots" id="secretDots">&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</span>
+        <span class="secret-actual" id="secretActual" data-value="${escapeHtml(entry.password)}"></span>
+        <button class="btn-sm btn-sm-blue" id="showBtn" onclick="toggleShow()">Show</button>
+        <button class="btn-sm btn-sm-green" onclick="copyValue()">Copy</button>
       </div>
       <div class="copy-feedback" id="copyFeedback"></div>
     </div>
@@ -109,26 +99,18 @@ function renderDetail() {
     <div class="info-row">
       <div class="info-label">Notes</div>
       <div class="info-value">
-        ${secretMeta.notes
-          ? escapeHtml(secretMeta.notes)
+        ${cleanNotes
+          ? escapeHtml(cleanNotes)
           : '<span style="color:var(--muted)">—</span>'}
       </div>
     </div>
 
-    <!-- Action buttons -->
+    <!-- Actions -->
     <div class="action-buttons">
       <button class="btn btn-blue" style="flex:1;justify-content:center;" onclick="editEntry()">
-        <!--
-          UPDATE ICON — replace src="" with e.g. src="images/edit.png"
-        -->
-        <div class="img-placeholder btn-action-icon"><img src="" alt="edit"/></div>
         Update
       </button>
       <button class="btn btn-danger" style="flex:1;justify-content:center;" onclick="openModal()">
-        <!--
-          DELETE ICON — replace src="" with e.g. src="images/delete.png"
-        -->
-        <div class="img-placeholder btn-action-icon"><img src="" alt="delete"/></div>
         Delete
       </button>
     </div>
@@ -140,65 +122,47 @@ function renderError(msg) {
     `<p style="color:var(--muted);text-align:center;padding:50px;">${msg}</p>`;
 }
 
-async function toggleShow() {
+// ── Show / hide password ───────────────────────────────────────────────────
+// The password is already decrypted by the backend and stored in data-value
+function toggleShow() {
   const dots   = document.getElementById('secretDots');
   const actual = document.getElementById('secretActual');
   const btn    = document.getElementById('showBtn');
-  if (!btn) return;
+  if (!btn || !actual) return;
 
-  if (actual.style.display === 'block') {
+  if (actual.style.display === 'inline') {
     actual.style.display = 'none';
     dots.style.display   = 'inline';
-    btn.innerHTML = btn.innerHTML.replace(/Hide/,'Show');
-    return;
+    btn.textContent = 'Show';
+  } else {
+    actual.textContent   = actual.dataset.value;
+    actual.style.display = 'inline';
+    dots.style.display   = 'none';
+    btn.textContent = 'Hide';
   }
-
-  if (!secretValue && token) {
-    btn.innerHTML = btn.innerHTML.replace(/Show/,'Loading...');
-    try {
-      const res  = await fetch(`${API}/secrets/${secretId}`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      secretValue = (await res.json()).value;
-    } catch {
-      btn.innerHTML = btn.innerHTML.replace(/Loading\.\.\./,'Show');
-      return;
-    }
-  }
-
-  if (!secretValue) return;
-  actual.textContent   = escapeHtml(secretValue);
-  actual.style.display = 'block';
-  dots.style.display   = 'none';
-  btn.innerHTML = btn.innerHTML.replace(/Show/,'Hide');
 }
 
+// ── Copy password to clipboard ────────────────────────────────────────────
 async function copyValue() {
-  if (!secretValue && token) {
-    try {
-      const res  = await fetch(`${API}/secrets/${secretId}`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      secretValue = (await res.json()).value;
-    } catch { return; }
-  }
-  if (!secretValue) return;
-  await navigator.clipboard.writeText(secretValue);
-  const fb = document.getElementById('copyFeedback');
-  if (fb) { fb.textContent = 'Copied to clipboard'; setTimeout(()=>fb.textContent='',2000); }
+  const actual = document.getElementById('secretActual');
+  if (!actual) return;
+  try {
+    await navigator.clipboard.writeText(actual.dataset.value);
+    const fb = document.getElementById('copyFeedback');
+    if (fb) { fb.textContent = 'Copied to clipboard'; setTimeout(()=>fb.textContent='', 2000); }
+  } catch {}
 }
 
 function editEntry() {
-  window.location.href = `create-entry.html?edit=${secretId}`;
+  window.location.href = `create-entry.html?edit=${entryId}`;
 }
 
 function openModal()  { document.getElementById('deleteModal').classList.add('open'); }
 function closeModal() { document.getElementById('deleteModal').classList.remove('open'); }
 
 document.getElementById('confirmDelete')?.addEventListener('click', async () => {
-  if (!token) { closeModal(); return; }
   try {
-    const res = await fetch(`${API}/secrets/${secretId}`, {
+    const res = await fetch(`${API}/entries/${entryId}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });

@@ -8,77 +8,130 @@
   <link rel="stylesheet" href="entries.css"/>
 </head>
 <body>
+<div id="particles"></div>
+
 <nav class="navbar">
-  <a class="navbar-brand" href="home.html">
-    <div class="nav-logo-wrap"><div class="img-placeholder" style="width:32px;height:32px;border-radius:8px;"><img src="ChatGPT Image 14 juil. 2026, 09_33_25.png" alt="SecureVault logo" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/></div></div>
+  <a class="navbar-brand" href="welcome.html">
+    <div class="nav-logo-wrap">
+      <img src="ChatGPT Image 14 juil. 2026, 09_33_25.png" alt="logo" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/>
+    </div>
     Secure<span>Vault</span>
   </a>
-  <button class="btn btn-danger" style="padding:8px 18px;font-size:13px;" onclick="logout()">Sign Out</button>
+  <div class="navbar-links" id="navbarLinks">
+    <a href="welcome.html" class="nav-link">Home</a>
+    <a href="home.html"    class="nav-link" id="nlDashboard">Dashboard</a>
+    <a href="profile.html" class="nav-link" id="nlProfile">Profile</a>
+    <span class="nav-user-chip" id="navUserChip" style="display:none;"></span>
+    <a href="login.html"      class="btn btn-ghost"  style="padding:8px 18px;font-size:13px;" id="nlLogin">Login</a>
+    <a href="onboarding.html" class="btn btn-green"  style="padding:8px 18px;font-size:13px;" id="nlRegister">Register</a>
+    <button onclick="globalLogout()" class="btn btn-danger" style="padding:8px 18px;font-size:13px;display:none;" id="nlLogout">Sign Out</button>
+  </div>
 </nav>
 
 <div class="page-wrapper">
 <div class="entries-wrap">
 
-  <a href="home.html" class="back-link">&#8592; Back to Home</a>
-  <h1 class="section-title">Your <span>Vault</span></h1>
-  <p style="color:var(--muted);margin-bottom:44px;font-size:14px;">Select a category to browse your entries.</p>
+  <!-- Page header -->
+  <div class="entries-page-header">
+    <div>
+      <a href="home.html" class="back-link" style="margin-bottom:12px;">&#8592; Home</a>
+      <h1 class="section-title">Your <span>Vault</span></h1>
+      <p class="section-sub">// SELECT A CATEGORY TO BROWSE ENCRYPTED ENTRIES</p>
+    </div>
+    <div style="text-align:right;">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:2px;">TOTAL</div>
+      <div style="font-family:var(--font-h);font-size:40px;font-weight:700;color:var(--green);text-shadow:0 0 16px rgba(0,255,170,.3);" id="totalCount">—</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:2px;">SECRETS SECURED</div>
+    </div>
+  </div>
 
+  <!-- Ticker -->
+  <div class="entries-ticker">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--green)"></span>AES-256 encrypted at rest</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--blue)"></span>JWT session active</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--red)"></span>Zero plain text stored</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--purple)"></span>Self-hosted &amp; private</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--green)"></span>bcrypt password hashing</span>
+      <!-- duplicate for loop -->
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--green)"></span>AES-256 encrypted at rest</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--blue)"></span>JWT session active</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--red)"></span>Zero plain text stored</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--purple)"></span>Self-hosted &amp; private</span>
+      <span class="ticker-item"><span class="ticker-dot" style="background:var(--green)"></span>bcrypt password hashing</span>
+    </div>
+  </div>
+
+  <!-- Category grid — big cards -->
   <div class="cat-grid">
 
     <a href="category.html?cat=social" class="cat-tile card animate-in" style="animation-delay:.05s;">
+      <div class="ct-bg-img" style="background-image:url('social media.jpg');"></div>
+      <div class="ct-overlay"></div>
       <div class="ct-glow" style="background:var(--blue)"></div>
-      <div class="ct-img-wrap">
-        <div class="img-placeholder ct-img">
-          <img src="social media.jpg" alt="Social Media"/>
+      <div class="ct-content">
+        <div class="ct-img-wrap">
+          <div class="ct-img"><img src="social media.jpg" alt="Social Media"/></div>
         </div>
+        <div class="ct-name">Social Media</div>
+        <div class="ct-count" id="count-social">— entries</div>
+        <div class="ct-divider"></div>
+        <div class="ct-arrow">&#8594;</div>
       </div>
-      <div class="ct-name">Social Media</div>
-      <div class="ct-count" id="count-social">— entries</div>
-      <div class="ct-arrow">&#8594;</div>
     </a>
 
     <a href="category.html?cat=bank" class="cat-tile card animate-in" style="animation-delay:.1s;">
+      <div class="ct-bg-img" style="background-image:url('bank.webp');"></div>
+      <div class="ct-overlay"></div>
       <div class="ct-glow" style="background:var(--green)"></div>
-      <div class="ct-img-wrap">
-        <div class="img-placeholder ct-img">
-          <!-- Drop a banking image here e.g. src="images/bank.jpg" -->
-          <img src="bank.webp" alt="Banking"/>
+      <div class="ct-content">
+        <div class="ct-img-wrap">
+          <div class="ct-img"><img src="bank.webp" alt="Banking"/></div>
         </div>
+        <div class="ct-name">Banking</div>
+        <div class="ct-count" id="count-bank">— entries</div>
+        <div class="ct-divider"></div>
+        <div class="ct-arrow">&#8594;</div>
       </div>
-      <div class="ct-name">Banking</div>
-      <div class="ct-count" id="count-bank">— entries</div>
-      <div class="ct-arrow">&#8594;</div>
     </a>
 
     <a href="category.html?cat=work" class="cat-tile card animate-in" style="animation-delay:.15s;">
+      <div class="ct-bg-img" style="background-image:url('work.webp');"></div>
+      <div class="ct-overlay"></div>
       <div class="ct-glow" style="background:var(--red)"></div>
-      <div class="ct-img-wrap">
-        <div class="img-placeholder ct-img">
-          <img src="work.webp" alt="Work"/>
+      <div class="ct-content">
+        <div class="ct-img-wrap">
+          <div class="ct-img"><img src="work.webp" alt="Work"/></div>
         </div>
+        <div class="ct-name">Work</div>
+        <div class="ct-count" id="count-work">— entries</div>
+        <div class="ct-divider"></div>
+        <div class="ct-arrow">&#8594;</div>
       </div>
-      <div class="ct-name">Work</div>
-      <div class="ct-count" id="count-work">— entries</div>
-      <div class="ct-arrow">&#8594;</div>
     </a>
 
     <a href="category.html?cat=personal" class="cat-tile card animate-in" style="animation-delay:.2s;">
+      <div class="ct-bg-img" style="background-image:url('personal.png');"></div>
+      <div class="ct-overlay"></div>
       <div class="ct-glow" style="background:var(--purple)"></div>
-      <div class="ct-img-wrap">
-        <div class="img-placeholder ct-img">
-          <!-- Drop a personal/home image here e.g. src="images/personal.jpg" -->
-          <img src="personal.png" alt="Personal"/>
+      <div class="ct-content">
+        <div class="ct-img-wrap">
+          <div class="ct-img"><img src="personal.png" alt="Personal"/></div>
         </div>
+        <div class="ct-name">Personal</div>
+        <div class="ct-count" id="count-personal">— entries</div>
+        <div class="ct-divider"></div>
+        <div class="ct-arrow">&#8594;</div>
       </div>
-      <div class="ct-name">Personal</div>
-      <div class="ct-count" id="count-personal">— entries</div>
-      <div class="ct-arrow">&#8594;</div>
     </a>
 
   </div>
+
 </div>
 </div>
 
+<script src="navbar.js"></script>
+<script src="particles.js"></script>
 <script src="entries.js"></script>
 </body>
 </html>

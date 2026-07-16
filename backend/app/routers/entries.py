@@ -43,6 +43,16 @@ def create_entry(
 
     return db_entry
 
+@router.get("/", response_model=list[EntryResponse])
+def list_entries(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    return db.query(VaultEntry).filter(
+        VaultEntry.user_id == current_user.id
+    ).all()
+
+
 @router.get(
     "/{entry_id}",
     response_model=EntryDetailResponse

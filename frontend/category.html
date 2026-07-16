@@ -10,11 +10,21 @@
 </head>
 <body>
 <nav class="navbar">
-  <a class="navbar-brand" href="home.html">
-    <div class="nav-logo-wrap"><div class="img-placeholder" style="width:32px;height:32px;border-radius:8px;"><img src="ChatGPT Image 14 juil. 2026, 09_33_25.png" alt="logo"/></div></div>
+  <a class="navbar-brand" href="welcome.html">
+    <div class="nav-logo-wrap">
+      <img src="ChatGPT Image 14 juil. 2026, 09_33_25.png" alt="logo" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/>
+    </div>
     Secure<span>Vault</span>
   </a>
-  <button class="btn btn-danger" style="padding:8px 18px;font-size:13px;" onclick="logout()">Sign Out</button>
+  <div class="navbar-links" id="navbarLinks">
+    <a href="welcome.html" class="nav-link">Home</a>
+    <a href="home.html"    class="nav-link" id="nlDashboard">Dashboard</a>
+    <a href="profile.html" class="nav-link" id="nlProfile">Profile</a>
+    <span class="nav-user-chip" id="navUserChip" style="display:none;"></span>
+    <a href="login.html"      class="btn btn-ghost"  style="padding:8px 18px;font-size:13px;" id="nlLogin">Login</a>
+    <a href="onboarding.html" class="btn btn-green"  style="padding:8px 18px;font-size:13px;" id="nlRegister">Register</a>
+    <button onclick="globalLogout()" class="btn btn-danger" style="padding:8px 18px;font-size:13px;display:none;" id="nlLogout">Sign Out</button>
+  </div>
 </nav>
 
 <div class="page-wrapper">
@@ -46,5 +56,6 @@
 </div>
 
 <script src="category.js"></script>
+<script src="navbar.js"></script>
 </body>
 </html>

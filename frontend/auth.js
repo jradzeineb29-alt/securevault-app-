@@ -1,29 +1,51 @@
 /**
- * auth.js — handles login and register form submissions.
- * Stores the JWT token and username in localStorage after login/register.
+ * auth.js — login and registration logic.
+ * Connects to POST /auth/login and POST /auth/register
  */
 
-const API = 'http://localhost:8000';
+const API = 'http://127.0.0.1:8000';
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function showAlert(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent  = msg;
+  el.style.display = 'block';
+}
+
+function hideAlerts() {
+  ['errorBox', 'successBox'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+}
+
+function parseError(data) {
+  if (!data) return 'Something went wrong.';
+  if (typeof data.detail === 'string') return data.detail;
+  if (Array.isArray(data.detail)) return data.detail.map(d => d.msg || d).join(', ');
+  if (data.message) return data.message;
+  return 'Something went wrong.';
+}
 
 // ── Password strength meter (register page only) ──────────────────────────
 const pwdInput = document.getElementById('password');
 if (pwdInput && document.getElementById('strengthFill')) {
   pwdInput.addEventListener('input', () => {
-    const val = pwdInput.value;
+    const val   = pwdInput.value;
     const fill  = document.getElementById('strengthFill');
     const label = document.getElementById('strengthLabel');
     let score = 0;
-    if (val.length >= 8)  score++;
-    if (/[A-Z]/.test(val)) score++;
-    if (/[0-9]/.test(val)) score++;
+    if (val.length >= 8)         score++;
+    if (/[A-Z]/.test(val))       score++;
+    if (/[0-9]/.test(val))       score++;
     if (/[^A-Za-z0-9]/.test(val)) score++;
-
     const levels = [
       { w: '0%',   color: 'transparent', text: '' },
-      { w: '25%',  color: '#e63946',     text: 'Weak' },
-      { w: '50%',  color: '#f4a261',     text: 'Fair' },
-      { w: '75%',  color: '#00b4d8',     text: 'Good' },
-      { w: '100%', color: '#00f5a0',     text: 'Strong' },
+      { w: '25%',  color: '#ff2d55',     text: 'Weak' },
+      { w: '50%',  color: '#ff9500',     text: 'Fair' },
+      { w: '75%',  color: '#00c8f0',     text: 'Good' },
+      { w: '100%', color: '#00ffaa',     text: 'Strong' },
     ];
     fill.style.width      = levels[score].w;
     fill.style.background = levels[score].color;
@@ -32,54 +54,41 @@ if (pwdInput && document.getElementById('strengthFill')) {
   });
 }
 
-// ── Helpers ────────────────────────────────────────────────────────────────
-function showAlert(id, msg) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.textContent = msg;
-  el.style.display = 'block';
-}
-function hideAlerts() {
-  ['errorBox','successBox'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = 'none';
-  });
-}
-function parseError(data) {
-  if (!data) return 'Something went wrong.';
-  if (typeof data.detail === 'string') return data.detail;
-  if (Array.isArray(data.detail)) return data.detail[0]?.msg || 'Validation error.';
-  return 'Something went wrong.';
-}
-
 // ── LOGIN ──────────────────────────────────────────────────────────────────
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     hideAlerts();
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = 'Signing in...';
 
+    const btn      = document.getElementById('submitBtn');
     const email    = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
 
+    btn.disabled    = true;
+    btn.textContent = 'Signing in...';
+
     try {
-      const res  = await fetch(`${API}/login`, {
-        method: 'POST',
+      const res  = await fetch(`${API}/auth/login`, {
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body:    JSON.stringify({ email, password })
       });
       const data = await res.json();
 
-      if (res.ok) {
-        // Save token — all future requests need it
+      if (res.ok && data.access_token) {
         localStorage.setItem('token', data.access_token);
-        // Save email as display name (username shown on home page)
-        // If the backend returns a username we'd use that — for now use email prefix
-        const displayName = email.split('@')[0];
-        localStorage.setItem('username', displayName);
+
+        // Fetch real username from /auth/me
+        try {
+          const me = await fetch(`${API}/auth/me`, {
+            headers: { 'Authorization': `Bearer ${data.access_token}` }
+          });
+          const meData = await me.json();
+          localStorage.setItem('username', meData.username || email.split('@')[0]);
+        } catch {
+          localStorage.setItem('username', email.split('@')[0]);
+        }
 
         showAlert('successBox', 'Access granted. Loading your vault...');
         setTimeout(() => { window.location.href = 'home.html'; }, 800);
@@ -89,8 +98,8 @@ if (loginForm) {
     } catch {
       showAlert('errorBox', 'Cannot connect to the server. Is the backend running?');
     } finally {
-      btn.disabled = false;
-      btn.textContent = 'Sign In →';
+      btn.disabled    = false;
+      btn.textContent = 'Sign In';
     }
   });
 }
@@ -101,35 +110,42 @@ if (registerForm) {
   registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     hideAlerts();
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = 'Creating vault...';
 
-    const username = document.getElementById('username')?.value.trim() || '';
+    const btn      = document.getElementById('submitBtn');
+    const username = document.getElementById('username').value.trim();
     const email    = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
 
+    btn.disabled    = true;
+    btn.textContent = 'Creating vault...';
+
     try {
-      const res  = await fetch(`${API}/register`, {
-        method: 'POST',
+      // Step 1: Register
+      const res  = await fetch(`${API}/auth/register`, {
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body:    JSON.stringify({ username, email, password })
       });
       const data = await res.json();
 
-      if (res.ok) {
-        // Auto-login after registration
-        const loginRes  = await fetch(`${API}/login`, {
-          method: 'POST',
+      if (res.ok && data.id) {
+        // Step 2: Auto-login
+        const loginRes  = await fetch(`${API}/auth/login`, {
+          method:  'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
+          body:    JSON.stringify({ email, password })
         });
         const loginData = await loginRes.json();
-        if (loginRes.ok) {
-          localStorage.setItem('token', loginData.access_token);
-          localStorage.setItem('username', username || email.split('@')[0]);
+
+        if (loginRes.ok && loginData.access_token) {
+          localStorage.setItem('token',    loginData.access_token);
+          localStorage.setItem('username', username);
           showAlert('successBox', 'Vault created! Taking you home...');
           setTimeout(() => { window.location.href = 'home.html'; }, 1000);
+        } else {
+          // Registered but auto-login failed — send to login page
+          showAlert('successBox', 'Account created! Please sign in.');
+          setTimeout(() => { window.location.href = 'login.html'; }, 1500);
         }
       } else {
         showAlert('errorBox', parseError(data));
@@ -137,7 +153,7 @@ if (registerForm) {
     } catch {
       showAlert('errorBox', 'Cannot connect to the server. Is the backend running?');
     } finally {
-      btn.disabled = false;
+      btn.disabled    = false;
       btn.textContent = 'Create Account';
     }
   });

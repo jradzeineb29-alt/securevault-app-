@@ -12,52 +12,93 @@
 
 <nav class="navbar">
   <a class="navbar-brand" href="welcome.html">
-    <div class="nav-logo-wrap"><div class="img-placeholder" style="width:32px;height:32px;border-radius:8px;"><img src="ChatGPT Image 14 juil. 2026, 09_33_25.png" alt="SecureVault logo" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/></div></div>
+    <div class="nav-logo-wrap">
+      <img src="ChatGPT Image 14 juil. 2026, 09_33_25.png" alt="logo" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/>
+    </div>
     Secure<span>Vault</span>
   </a>
-  <a href="register.html" class="btn btn-ghost" style="padding:8px 20px;font-size:13px;">Register</a>
+  <div class="navbar-links" id="navbarLinks">
+    <a href="welcome.html" class="nav-link">Home</a>
+    <a href="home.html"    class="nav-link" id="nlDashboard">Dashboard</a>
+    <a href="profile.html" class="nav-link" id="nlProfile">Profile</a>
+    <span class="nav-user-chip" id="navUserChip" style="display:none;"></span>
+    <a href="login.html"      class="btn btn-ghost"  style="padding:8px 18px;font-size:13px;" id="nlLogin">Login</a>
+    <a href="onboarding.html" class="btn btn-green"  style="padding:8px 18px;font-size:13px;" id="nlRegister">Register</a>
+    <button onclick="globalLogout()" class="btn btn-danger" style="padding:8px 18px;font-size:13px;display:none;" id="nlLogout">Sign Out</button>
+  </div>
 </nav>
 
 <div class="page-wrapper">
 <div class="auth-container">
-  <div class="auth-card card animate-in">
 
-    <!-- Logo / hero image -->
-    <div class="auth-logo-wrap">
-      <!--
-        IMAGE: login page hero icon/illustration
-        Replace src="" with e.g. src="images/vault-login.png"
-      -->
-      <div class="img-placeholder auth-logo-img"><img src="" alt="SecureVault login"/></div>
+  <!-- Left visual panel -->
+  <div class="auth-visual">
+    <div class="auth-ring auth-ring-1"></div>
+    <div class="auth-ring auth-ring-2"></div>
+    <div class="auth-ring auth-ring-3"></div>
+    <div class="auth-visual-content">
+      <div class="auth-visual-img">
+        <img src="secret.jpg" alt="SecureVault"/>
+      </div>
+      <div class="auth-visual-title">SecureVault</div>
+      <div class="auth-visual-sub">MILITARY-GRADE SECRET MANAGEMENT</div>
+      <div class="auth-stats">
+        <div class="auth-stat">
+          <div class="auth-stat-val">AES-256</div>
+          <div class="auth-stat-label">Encryption</div>
+        </div>
+        <div class="auth-stat">
+          <div class="auth-stat-val" style="color:var(--blue)">JWT</div>
+          <div class="auth-stat-label">Auth</div>
+        </div>
+        <div class="auth-stat">
+          <div class="auth-stat-val" style="color:var(--red)">0</div>
+          <div class="auth-stat-label">Plain text</div>
+        </div>
+      </div>
     </div>
-
-    <h1 class="auth-title">Welcome <span style="color:var(--blue)">Back</span></h1>
-    <p class="auth-sub">Access your encrypted vault</p>
-
-    <div class="alert alert-error"   id="errorBox"></div>
-    <div class="alert alert-success" id="successBox"></div>
-
-    <form id="loginForm">
-      <div class="field">
-        <label>Email Address</label>
-        <input type="email" id="email" placeholder="you@example.com" required autocomplete="email"/>
-      </div>
-      <div class="field">
-        <label>Password</label>
-        <input type="password" id="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" required autocomplete="current-password"/>
-      </div>
-      <button type="submit" class="btn btn-blue" style="width:100%;justify-content:center;margin-top:8px;" id="submitBtn">
-        Sign In
-      </button>
-    </form>
-
-    <p class="auth-footer">
-      Don't have an account? <a href="register.html">Create one</a>
-    </p>
   </div>
+
+  <!-- Right form panel -->
+  <div class="auth-form-panel">
+    <div class="auth-card animate-in">
+
+      <div class="auth-logo-wrap">
+        <div class="auth-logo-img">
+          <img src="ChatGPT Image 14 juil. 2026, 09_33_25.png" alt="logo"/>
+        </div>
+      </div>
+
+      <h1 class="auth-title">Welcome <span style="color:var(--blue);text-shadow:0 0 16px rgba(0,200,240,.5)">Back</span></h1>
+      <p class="auth-sub">Access your encrypted vault</p>
+
+      <div class="alert alert-error"   id="errorBox"></div>
+      <div class="alert alert-success" id="successBox"></div>
+
+      <form id="loginForm">
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" id="email" placeholder="you@example.com" required autocomplete="email"/>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password"/>
+        </div>
+        <button type="submit" class="btn btn-blue" style="width:100%;justify-content:center;margin-top:4px;" id="submitBtn">
+          Sign In
+        </button>
+      </form>
+
+      <p class="auth-footer">
+        Don't have an account? <a href="register.html">Create one</a>
+      </p>
+    </div>
+  </div>
+
 </div>
 </div>
 
+<script src="navbar.js"></script>
 <script src="particles.js"></script>
 <script src="auth.js"></script>
 </body>
