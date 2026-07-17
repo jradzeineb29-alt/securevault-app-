@@ -6,30 +6,33 @@ from app.routers import auth
 from app.routers import entries
 
 
+from contextlib import asynccontextmanager
+
+
+
+
+# Import your models here so SQLAlchemy knows about them
+# Example:
+# from app.models.user import User
+# from app.models.password import Password
+#
+# Or if your models are all inside app/models.py:
+# from app import models
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    Base.metadata.create_all(bind=engine)
+    yield
+
+
 app = FastAPI(
-    title="SecureVault API"
+    title="SecureVault API",
+    lifespan=lifespan,
 )
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-app.include_router(entries.router)
-app.include_router(auth.router)
-
-Base.metadata.create_all(bind=engine)
-@app.get("/")
-def root():
-    return {
-        "message": "SecureVault API is running"
-    }
-
-
-@app.get("/health")
-def health():
-    return {
-        "status": "healthy"
-    }
+# Include your routers here
+# Example:
+# from app.routes import auth, passwords
+#
+# app.include_router(auth.router)
+# app.include_router(passwords.router)
